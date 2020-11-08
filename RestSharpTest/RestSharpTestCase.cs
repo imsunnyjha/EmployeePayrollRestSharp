@@ -33,38 +33,38 @@ namespace RestSharpTest
             return response;
         }
 
-        //[TestMethod]
-        //public void OnCallingGETApi_ReturnEmployeeList()
-        //{
-        //    IRestResponse response = GetEmployeeList();
+        [TestMethod]
+        public void OnCallingGETApi_ReturnEmployeeList()
+        {
+            IRestResponse response = GetEmployeeList();
 
-        //    // assert
-        //    Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
-        //    List<Employee> dataResponse = JsonConvert.DeserializeObject<List<Employee>>(response.Content);
-        //    Assert.AreEqual(3, dataResponse.Count);
-        //}
-        //[TestMethod]
-        //public void GivenEmployee_DoPost_ShouldReturnAddedEmployee()
-        //{
-        //    // arrange
-        //    RestRequest request = new RestRequest("/employees", Method.POST);
-        //    JObject objectBody = new JObject
-        //    {
-        //        { "name", "Bella" },
-        //        { "salary", "98700" }
-        //    };
+            // assert
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            List<Employee> dataResponse = JsonConvert.DeserializeObject<List<Employee>>(response.Content);
+            Assert.AreEqual(3, dataResponse.Count);
+        }
+        [TestMethod]
+        public void GivenEmployee_DoPost_ShouldReturnAddedEmployee()
+        {
+            // arrange
+            RestRequest request = new RestRequest("/employees", Method.POST);
+            JObject objectBody = new JObject
+            {
+                { "name", "Bella" },
+                { "salary", "98700" }
+            };
 
-        //    request.AddParameter("application/json", objectBody, ParameterType.RequestBody);
+            request.AddParameter("application/json", objectBody, ParameterType.RequestBody);
 
-        //    // act
-        //    IRestResponse response = client.Execute(request);
+            // act
+            IRestResponse response = client.Execute(request);
 
-        //    // assert
-        //    Assert.AreEqual(response.StatusCode, HttpStatusCode.Created);
-        //    Employee dataResponse = JsonConvert.DeserializeObject<Employee>(response.Content);
-        //    Assert.AreEqual("Bella", dataResponse.name);
-        //    Assert.AreEqual("98700", dataResponse.salary);
-        //}
+            // assert
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.Created);
+            Employee dataResponse = JsonConvert.DeserializeObject<Employee>(response.Content);
+            Assert.AreEqual("Bella", dataResponse.name);
+            Assert.AreEqual("98700", dataResponse.salary);
+        }
         [TestMethod]
         public void GivenEmployee_OnPut_ShouldReturnUpdatedEmployee()
         {
@@ -86,6 +86,18 @@ namespace RestSharpTest
             Employee dataResponse = JsonConvert.DeserializeObject<Employee>(response.Content);
             Assert.AreEqual("Haden", dataResponse.name);
             Assert.AreEqual("98700", dataResponse.salary);
+        }
+        [TestMethod]
+        public void GivenEmployee_OnDelete_ShouldReturnSuccess()
+        {
+            // arrange
+            RestRequest request = new RestRequest("/employees/3", Method.DELETE);
+
+            // act
+            IRestResponse response = client.Execute(request);
+
+            // assert
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
     }
 }
